@@ -52,7 +52,8 @@ if (HTTP::Thin->new->get('http://www.apple.com')->content =~ m,<title>Apple</tit
                  }
               ],
               "method" => "POST",
-              "path" => "/api/_test"
+              "path" => "/api/_test",
+              "tracer" => ignore(),
         },
         'post / upload';
 } # end skip online tests if we have no online access 
