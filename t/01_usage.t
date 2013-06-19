@@ -1,10 +1,11 @@
-jse Test::More;
+use Test::More;
 use Test::Deep;
 
 use lib 'lib';
 use 5.010;
 use Ouch;
 use JSON;
+use HTTP::Thin;
 
 use_ok 'Wing::Client';
 
@@ -13,7 +14,7 @@ my $wing = Wing::Client->new(uri=>'https://www.thegamecrafter.com');
 my $result = $wing->_process_response(HTTP::Response->new(200, 'OK', ['Content-Type' => 'application/json'], '{"result":{"foo":"bar"}}'));
 is $result->{foo}, 'bar', 'process_response()';
 
-if (LWP::UserAgent->new->is_online) { # skip online tests if we have no online access
+if (HTTP::Thin->new->get('http://www.apple.com')->content =~ m,<title>Apple</title>,) { # skip online tests if we have no online access
 
     # get
     my $result = eval{$wing->get('_test')};

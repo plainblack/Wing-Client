@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package Wing::Client;
 
-use HTTP::Tiny;
+use HTTP::Thin;
 use HTTP::Request::Common;
 use HTTP::CookieJar;
 use JSON;
@@ -213,10 +213,10 @@ sub _process_response {
 
 =head1 PREREQS
 
-L<LWP::UserAgent>
+L<HTTP::Thin>
 L<Ouch>
 L<HTTP::Request::Common>
-L<HTTP::CookieJar::LWP>
+L<HTTP::CookieJar>
 L<JSON>
 L<URI>
 L<Moo>
