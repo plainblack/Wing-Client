@@ -3,6 +3,8 @@ use warnings;
 package Wing::Client;
 
 use HTTP::Tiny;
+use HTTP::Request::Common;
+use HTTP::CookieJar;
 use JSON;
 use URI;
 use Ouch;
@@ -61,6 +63,27 @@ has uri => (
     is          => 'rw',
     required    => 1,
 );
+
+=item agent
+
+A LWP::UserAgent object used to keep a persistent cookie_jar across requests.
+
+=back
+
+=back
+
+=cut
+
+has agent => (
+    is          => 'ro',
+    required    => 0,
+    lazy        => 1,
+    builder     => '_build_agent',
+);
+
+sub _build_agent {
+    return HTTP::Thin->new( cookie_jar => HTTP::CookieJar->new(), );
+}
 
 =head2 get(path, params)
 
@@ -170,7 +193,7 @@ sub _create_uri {
 
 sub _process_request {
     my $self = shift;
-    $self->_process_response(LWP::UserAgent->new->request( @_ ));
+    $self->_process_response($self->agent->request( @_ ));
 }
 
 sub _process_response {
@@ -193,6 +216,7 @@ sub _process_response {
 L<LWP::UserAgent>
 L<Ouch>
 L<HTTP::Request::Common>
+L<HTTP::CookieJar::LWP>
 L<JSON>
 L<URI>
 L<Moo>

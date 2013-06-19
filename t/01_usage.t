@@ -1,4 +1,4 @@
-use Test::More;
+jse Test::More;
 use Test::Deep;
 
 use lib 'lib';

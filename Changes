@@ -1,3 +1,6 @@
+0.0200 - June 18, 2013
+ * Add requirement HTTP::CookieJar to keep track of cookies sent by the Wing server.
+
 0.0100 - May 31, 2013
  * Initial public release.
 
