@@ -107,7 +107,7 @@ sub get {
     my ($self, $path, $params) = @_;
     my $uri = $self->_create_uri($path);
     $uri->query_form($params);
-    return $self->_process_request( HTTP::Tiny->new->get($uri->as_string) );
+    return $self->_process_request( GET $uri );
 }
 
 =head2 delete(path, params)
@@ -131,7 +131,7 @@ A hash reference of parameters you wish to pass to the web service.
 sub delete {
     my ($self, $path, $params) = @_;
     my $uri = $self->_create_uri($path);
-    return $self->_process_request($uri->as_string, $params, 'X-HTTP-Method' => 'DELETE', Content_Type => 'form-data', Content => $params );
+    return $self->_process_request(POST $uri->as_string, $params, 'X-HTTP-Method' => 'DELETE', Content_Type => 'form-data', Content => $params );
 }
 
 =head2 put(path, params)
@@ -155,7 +155,7 @@ A hash reference of parameters you wish to pass to the web service.
 sub put {
     my ($self, $path, $params) = @_;
     my $uri = $self->_create_uri($path);
-    return $self->_process_request( POST $uri->as_string, 'X-HTTP-Method' => 'PUT', Content_Type => 'form-data', Content => $params );
+    return $self->_process_request( POST $uri->as_string, 'X-HTTP-Method' => 'PUT', Content_Type => 'form-data', Content => $params,);
 }
 
 =head2 post(path, params)
