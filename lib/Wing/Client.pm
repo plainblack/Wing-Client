@@ -82,7 +82,7 @@ has agent => (
 );
 
 sub _build_agent {
-    return HTTP::Thin->new( cookie_jar => HTTP::CookieJar->new(), );
+    return HTTP::Thin->new( cookie_jar => HTTP::CookieJar->new() )
 }
 
 =head2 get(path, params)
