@@ -53,10 +53,6 @@ A hash of parameters.
 
 The base URI of the service you're interacting with. Example: C<https://www.thegamecrafter.com>.
 
-=back
-
-=back
-
 =cut
 
 has uri => (
