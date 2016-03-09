@@ -44,6 +44,7 @@ if (HTTP::Thin->new->get('http://www.apple.com')->content =~ m,<title>Apple</tit
               "params" => {
                  "file" => "upload.txt"
               },        
+              "env" => ignore(),
               "uploads" => [
                  {
                     "filename" => "upload.txt",

@@ -1,3 +1,7 @@
+0.0402 - March 9, 2016
+ * Fix links to bug tracker.
+ * Fix test returning environment variables.
+
 0.0401 - July 1, 2013
  * Require the newest version of HTTP::Tiny to get around the IO::Socket::SSL problems for SSL_verify_mode
 
