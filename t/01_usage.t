@@ -39,7 +39,7 @@ if (HTTP::Thin->new->get('http://www.apple.com')->content =~ m,<title>Apple</tit
 
     # post & upload
     cmp_deeply 
-        $wing->post('_test', { file => ['t/upload.txt']}),  
+        $wing->post('_test', { file => ['t/upload.txt']}, { upload => 1}),  
         {
               "params" => {
                  "file" => "upload.txt"
@@ -57,6 +57,20 @@ if (HTTP::Thin->new->get('http://www.apple.com')->content =~ m,<title>Apple</tit
               "tracer" => ignore(),
         },
         'post / upload';
+
+    # post with multi 
+    cmp_deeply 
+        $wing->post('_test', { foo => [qw(a b c)]}),  
+        {
+              "params" => {
+                 "foo" => ["a","b","c"], 
+              },        
+              "env" => ignore(),
+              "method" => "POST",
+              "path" => "/api/_test",
+              "tracer" => ignore(),
+        },
+        'post with multi';
 } # end skip online tests if we have no online access 
 else {
     note "Skipping online tests, because we don't appear to have internet access.";

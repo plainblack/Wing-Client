@@ -130,7 +130,7 @@ sub delete {
     return $self->_process_request(POST $uri->as_string, $params, 'X-HTTP-Method' => 'DELETE', Content_Type => 'form-data', Content => $params );
 }
 
-=head2 put(path, params)
+=head2 put(path, params, options)
 
 Performs a C<PUT> request, which is used for updating data in the service.
 
@@ -144,17 +144,31 @@ The path to the REST interface you wish to call. You can abbreviate and leave of
 
 A hash reference of parameters you wish to pass to the web service.
 
+=item options
+
+=over
+
+=item upload
+
+Defaults to 0. If 1 then when you pass a param that is an array reference, the value of that array reference will be assumed to be a file name and will attempt to be uploaded per the inner workings of L<HTTP::Request::Common>.
+
+=back
+
 =back
 
 =cut
 
 sub put {
-    my ($self, $path, $params) = @_;
+    my ($self, $path, $params, $options) = @_;
     my $uri = $self->_create_uri($path);
-    return $self->_process_request( POST $uri->as_string, 'X-HTTP-Method' => 'PUT', Content_Type => 'form-data', Content => $params,);
+    my %headers = ( 'X-HTTP-Method' => 'PUT',Content => $params );
+    if ($options->{upload}) {
+        $headers{Content_Type} = 'form-data';
+    }
+    return $self->_process_request( POST $uri->as_string,  %headers);
 }
 
-=head2 post(path, params)
+=head2 post(path, params, options)
 
 Performs a C<POST> request, which is used for creating data in the service.
 
@@ -168,14 +182,28 @@ The path to the REST interface you wish to call. You can abbreviate and leave of
 
 A hash reference of parameters you wish to pass to the web service.
 
+=item options
+
+=over
+
+=item upload
+
+Defaults to 0. If 1 then when you pass a param that is an array reference, the value of that array reference will be assumed to be a file name and will attempt to be uploaded per the inner workings of L<HTTP::Request::Common>.
+
+=back
+
 =back
 
 =cut
 
 sub post {
-    my ($self, $path, $params) = @_;
+    my ($self, $path, $params, $options) = @_;
     my $uri = $self->_create_uri($path);
-    return $self->_process_request( POST $uri->as_string, Content_Type => 'form-data', Content => $params );
+    my %headers = ( Content => $params );
+    if ($options->{upload}) {
+        $headers{Content_Type} = 'form-data';
+    }
+    return $self->_process_request( POST $uri->as_string, %headers );
 }
 
 sub _create_uri {

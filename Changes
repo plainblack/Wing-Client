@@ -1,3 +1,9 @@
+1.0000 - December 28, 2016
+ * WARNING: Breaks compatibility.
+ * New options hashref on put and post methods.
+ * Uploads no longer work unless you pass an option for uploading.
+ * Now allows for multiple copies of the same param to be posted.
+
 0.0402 - March 9, 2016
  * Fix links to bug tracker.
  * Fix test returning environment variables.
